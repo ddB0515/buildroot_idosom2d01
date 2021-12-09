@@ -330,7 +330,7 @@ Now as tou can boot to uBoot you need to setup some commands for uBoot to be abl
 
 ```
 setenv bootargs console=ttyS0,115200 ubi.mtd=1 rootfstype=ubifs root=ubi0:rootfs rw clk_ignore_unused init=linuxrc
-setenv bootcmd 'loadaddr 0x22000000; ubi readvol ${loadaddr} kernel 0x800000; bootm ${loadaddr}'
+setenv bootcmd 'setenv loadaddr 0x22000000; ubi readvol ${loadaddr} kernel 0x800000; bootm ${loadaddr}'
 saveenv
 ```
 
