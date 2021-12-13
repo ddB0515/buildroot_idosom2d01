@@ -46,7 +46,12 @@ This is a buildroot setup for the various ido-som2d01 based boards.
   If you are really lucky something like this might work:
 
   ```
-  setenv loadaddr 0x22000000; loady 0x22000000 460800; bootm
+  setenv loadaddr 0x22000000; loady ${loadaddr} 230400; bootm
+  ```
+  or
+
+  ```
+  setenv loadaddr 0x22000000; loady ${loadaddr} 460800; bootm
   ```
 
   Eitherway, you should now be booted in a Linux environment where you can
@@ -115,6 +120,12 @@ and back again when you need to access the serial console.
 
 - Now lets get the kernel and rootfs images
   - For serial run `rz` and then send `idosom2d01-kernel.fit` and `idosom2d01-rootfs.squashfs`
+  - For tftp something like:
+  ```
+  tftp -b 4096 -g -r idosom2d01-kernel.fit 192.168.3.235
+  tftp -b 4096 -g -r idosom2d01-rootfs.squashfs 192.168.3.235
+  ```
+
   - Now run:
 
   ```
