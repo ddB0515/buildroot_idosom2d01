@@ -1,4 +1,5 @@
 *.stamp
+*.tmp
 dl
 ccache
 outputs
