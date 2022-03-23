@@ -1,10 +1,20 @@
 # buildroot_ido-som2d01
 
+![status-badge](https://woodpecker.thingy.jp/api/badges/fifteenhex/buildroot_idosom2d01/status.svg)
+
 Buildroot for ido-som2d01 based boards.
 
 ## Wha?
 
 This is a buildroot setup for the various ido-som2d01 based boards.
+
+- The som2d01 with an SSD201 or SSD202D
+- The [sbc2d06](http://linux-chenxing.org/infinity2/ido-sbc2d06/)
+- The [sbc2d70](http://linux-chenxing.org/infinity2/ido-sbc2d70/)
+
+This is not a all singing all dancing OS image for these things.
+This is meant to be something that builds a complete working set
+of binaries that you can work from.
 
 ## Flashing a blank module
 
@@ -18,9 +28,10 @@ This is a buildroot setup for the various ido-som2d01 based boards.
     replace the vendor IPL blob.
 
 - The main u-boot binary here lives in a UBI partition so that bad block
-  recovery etc actually works. You can't do the UBI setup with the ISP tool.
-  This is fine. The u-boot SPL is capable of loading the main u-boot binary
-  over serial. The first time you boot you need to send u-boot with ymodem.
+  recovery etc actually works. Loading the UBI partition data with the ISP tool
+  is very very slow so you don't to do that. The u-boot SPL is capable of loading
+  the main u-boot binary over serial. The first time you boot you need to send u-boot with ymodem.
+  This should be a lot faster than trying to flash the UBI partition via the ISP tool.
 
 - Now we need to format the part of the flash we'll use for the UBI
   partitions. `idosom2d01-kernel-rescue.fit` is a micro system with a kernel and just
@@ -144,3 +155,13 @@ and back again when you need to access the serial console.
   ```
 
 - Have fun!
+
+
+## Appendix: Creating ubi layout in u-boot
+  ```
+  ubi createvol uboot 0x100000 static
+  ubi createvol env 0x40000
+  ubi createvol kernel 0x1000000
+  ubi createvol rescue 0x1000000
+  ubi createvol rootfs -
+  ```
