@@ -1,4 +1,3 @@
----
 kind: pipeline
 type: docker
 name: default
@@ -6,7 +5,7 @@ name: default
 platform:
   os: linux
   arch: amd64
-  
+
 steps:
 
 - name: restore-cache-with-filesystem
@@ -119,5 +118,3 @@ volumes:
   - name: docker_sock
     host:
       path: /var/run/docker.sock
-
-...
